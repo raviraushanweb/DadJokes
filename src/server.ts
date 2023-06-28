@@ -1,7 +1,30 @@
 import express from 'express';
-import { APP_PORT, APP_HOST } from './config';
+import mongoose from 'mongoose';
+import { APP_PORT, APP_HOST, MONGO_CONNECT_URL } from './config';
+import router from './routes';
 
 const app = express();
+
+// connect to MongoDB
+async function mongoConnect() {
+  try {
+    if(MONGO_CONNECT_URL) {
+        await mongoose.connect(MONGO_CONNECT_URL);
+    }
+  } catch (err: unknown) {
+    if(err instanceof Error) {
+      console.error('Mongo connection error: ', err.message);
+    } else {
+      console.error('Mongo connection error: ', err);
+    }
+  }
+}
+
+const db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', () => {
+  console.log('Connected to MongoDB');
+});
 
 // middleware
 app.use(express.json());
@@ -12,6 +35,9 @@ app.get("/", (req, res) => {
   res.send("Welcome to Dad's Joke!");
 });
 
-app.listen(APP_PORT, () => {
+app.use('/api/v1', router);
+
+app.listen(APP_PORT, async () => {
     console.log(`App listening on port ${APP_PORT}`);
+    await mongoConnect();
 })
