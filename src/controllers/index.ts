@@ -1,0 +1,1 @@
+export { default as JokeController } from './jokes/JokeController';
