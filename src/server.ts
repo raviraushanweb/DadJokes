@@ -2,6 +2,7 @@ import express from 'express';
 import mongoose from 'mongoose';
 import { APP_PORT, APP_HOST, MONGO_CONNECT_URL } from './config';
 import router from './routes';
+import errorHandler from './middlewares/errorHandler';
 
 const app = express();
 
@@ -36,6 +37,7 @@ app.get("/", (req, res) => {
 });
 
 app.use('/api/v1', router);
+app.use(errorHandler);
 
 app.listen(APP_PORT, async () => {
     console.log(`App listening on port ${APP_PORT}`);

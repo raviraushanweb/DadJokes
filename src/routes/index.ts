@@ -3,6 +3,6 @@ import { JokeController } from '../controllers';
 
 const router = express.Router();
 
-router.get('/getsinglejoke', JokeController.getSingleJoke)
+router.get('/getajoke', JokeController.getSingleJoke)
 
 export default router;
