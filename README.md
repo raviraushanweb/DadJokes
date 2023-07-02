@@ -11,6 +11,17 @@ This is an API for Dad Jokes, implemented using Node.js and TypeScript with Expr
   - [Installation](#installation)
   - [Scripts](#scripts)
   - [Features](#features)
+- [Endpoints Documentation](#endpoints-documentation)
+  - [Get a Joke](#get-a-joke)
+    - [Request](#request)
+      - [Example](#example)
+    - [Response](#response)
+      - [Example](#example-1)
+  - [Get Multiple Jokes](#get-multiple-jokes)
+    - [Request](#request-1)
+      - [Example](#example-2)
+    - [Response](#response-1)
+      - [Example](#example-3)
   - [License](#license)
   - [Author Information](#author-information)
   - [Dependencies](#dependencies)
@@ -54,6 +65,124 @@ The following scripts are available:
 - REST API for fetching dad jokes.
 - Built with Node.js, Express, and TypeScript.
 - MongoDB integration with Mongoose.
+
+# Endpoints Documentation
+
+## Get a Joke
+
+This endpoint allows you to retrieve a random joke.
+
+### Request
+
+- Method: GET
+- URL: `http://localhost:3010/api/v1/getajoke`
+
+#### Example
+
+```javascript
+var axios = require("axios").default;
+
+var options = {
+  method: 'GET',
+  url: 'http://localhost:3010/api/v1/getajoke'
+};
+
+axios.request(options)
+  .then(function (response) {
+    console.log(response.data);
+  })
+  .catch(function (error) {
+    console.error(error);
+  });
+```
+
+### Response
+
+The response will be a JSON object containing the following fields:
+
+- `author` (string): The author of the joke.
+- `url` (string): The URL of the joke source.
+- `joke` (string): The content of the joke.
+- `date` (string): The date and time the joke was posted.
+- `viewCount` (number): The number of times the joke has been viewed.
+
+#### Example
+
+```json
+{
+  "author": "kingkwassa",
+  "url": "https://old.reddit.com/r/dadjokes/comments/5m7obg/global_warming_doesnt_worry_me/",
+  "joke": "Global warming doesn't worry me. It's global cooling that gives me shivers.",
+  "date": "2017-01-05T17:24:28.000Z",
+  "viewCount": 1
+}
+```
+
+Note: The values shown in the example response are for illustrative purposes and may vary in the actual response.
+
+## Get Multiple Jokes
+
+This endpoint allows you to retrieve multiple random jokes.
+
+### Request
+
+- Method: GET
+- URL: `http://localhost:3010/api/v1/getmultiplejoke/{count}`
+
+Replace `{count}` with the number of jokes you want to retrieve. For example, to get 10 jokes, use `http://localhost:3010/api/v1/getmultiplejoke/10`.
+
+#### Example
+
+```javascript
+var axios = require("axios").default;
+
+var options = {
+  method: 'GET',
+  url: 'http://localhost:3010/api/v1/getmultiplejoke/10'
+};
+
+axios.request(options)
+  .then(function (response) {
+    console.log(response.data);
+  })
+  .catch(function (error) {
+    console.error(error);
+  });
+```
+
+### Response
+
+The response will be an array of JSON objects, each representing a joke. Each joke object will have the following fields:
+
+- `author` (string): The author of the joke.
+- `url` (string): The URL of the joke source.
+- `joke` (string): The content of the joke.
+- `date` (string): The date and time the joke was posted.
+- `viewCount` (number): The number of times the joke has been viewed.
+
+#### Example
+
+```json
+[
+  {
+    "author": "DoomRulz",
+    "url": "https://old.reddit.com/r/dadjokes/comments/oanbkf/which_generation_does_forrest_gump_belong_to/",
+    "joke": "Which generation does Forrest Gump belong to? Gen A.",
+    "date": "2021-06-30T02:17:52.000Z",
+    "viewCount": 1
+  },
+  {
+    "author": "indiana_aithan",
+    "url": "https://old.reddit.com/r/dadjokes/comments/oan8cc/i_was_teaching_my_son_how_to_drive/",
+    "joke": "I was teaching my son how to drive... I was teaching my son how to drive in a church parking lot and he was going nuts having a good time when one of the sisters came out and said 'Nun of us are as excited as y'all are'",
+    "date": "2021-06-30T02:12:45.000Z",
+    "viewCount": 1
+  },
+  // More jokes...
+]
+```
+
+Note: The values shown in the example response are for illustrative purposes and may vary in the actual response. The number of jokes in the array will be equal to the specified count in the request.
 
 ## License
 
